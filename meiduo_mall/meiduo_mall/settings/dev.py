@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+# python的找包路径
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -35,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 所有找包，是从manage开始找
+    'users.apps.UsersConfig'
 ]
 
 MIDDLEWARE = [
@@ -73,12 +77,12 @@ WSGI_APPLICATION = 'meiduo_mall.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # 数据库引擎
-        'HOST': '127.0.0.1', # 数据库主机
-        'PORT': 3306, # 数据库端口
-        'USER': 'wkj', # 数据库用户名
-        'PASSWORD': 'wkj0406', # 数据库用户密码
-        'NAME': 'meiduo' # 数据库名字
+        'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
+        'HOST': '127.0.0.1',  # 数据库主机
+        'PORT': 3306,  # 数据库端口
+        'USER': 'wkj',  # 数据库用户名
+        'PASSWORD': 'wkj0406',  # 数据库用户密码
+        'NAME': 'meiduo'  # 数据库名字
     },
 }
 
@@ -120,14 +124,14 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 CACHES = {
-    "default": { # 默认
+    "default": {  # 默认
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/0",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     },
-    "session": { # session
+    "session": {  # session
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/1",
         "OPTIONS": {
@@ -180,3 +184,5 @@ LOGGING = {
         },
     }
 }
+
+AUTH_USER_MODEL = 'users.User'
